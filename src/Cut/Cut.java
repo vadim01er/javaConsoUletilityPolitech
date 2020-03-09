@@ -59,7 +59,6 @@ public class Cut {
                 i++;
             } else change = false;
         }
-        System.out.println(outputFileName);
     }
 
     public void cutFile() {
