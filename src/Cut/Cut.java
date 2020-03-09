@@ -18,7 +18,6 @@ public class Cut {
     }
 
     private static int[] rangeParse(String range) {
-        System.out.println(Pattern.matches("-[0-9]+", range));
         if (!Pattern.matches("[0-9]+-", range) && !Pattern.matches("-[0-9]+", range) &&
                 !Pattern.matches("[0-9]+-[0-9]+", range))
             throw new IllegalArgumentException("Uncorrect range");
@@ -53,7 +52,8 @@ public class Cut {
         while(change) {
             File dir = new File(outputFileName);
             if(dir.exists()) {
-                if (i > 1) outputFileName = outputFileName.substring(0, outputFileName.length() - 3);
+                if (i > 1 && i < 10) outputFileName = outputFileName.substring(0, outputFileName.length() - 3);
+                else if (i >= 10) outputFileName = outputFileName.substring(0, outputFileName.length() - 4);
                 outputFileName += "("+ i +")";
                 i++;
             } else change = false;
