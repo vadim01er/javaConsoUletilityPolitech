@@ -34,24 +34,24 @@ public class TestCut {
         if (dir2.delete()) System.out.println("del");
         if (dir2.mkdir()) System.out.println("new");
 
-        CutLaunch.main("-w -o fortest\\testOut\\out fortest\\in 1-2".split(" "));
-        CutLaunch.main("-w -o fortest\\testOut\\out fortest\\in -3".split(" "));
-        CutLaunch.main("-w -o fortest\\testOut\\out fortest\\in 1-".split(" "));
-        CutLaunch.main("-w -o fortest\\testOut\\out fortest\\in 2-".split(" "));
-        CutLaunch.main("-w -o fortest\\testOut\\out fortest\\in 7-".split(" "));
-        CutLaunch.main("-w -o fortest\\testOut\\out fortest\\in 3-7".split(" "));
-        CutLaunch.main("-c -o fortest\\testOut\\out fortest\\in 4-12".split(" "));
-        CutLaunch.main("-c -o fortest\\testOut\\out fortest\\in -12".split(" "));
-        CutLaunch.main("-c -o fortest\\testOut\\out fortest\\in 4-".split(" "));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest", "fortest\\testOut\\out"));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(1)", "fortest\\testOut\\out(1)"));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(2)", "fortest\\testOut\\out(2)"));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(3)", "fortest\\testOut\\out(3)"));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(4)", "fortest\\testOut\\out(4)"));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(5)", "fortest\\testOut\\out(5)"));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(6)", "fortest\\testOut\\out(6)"));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(7)", "fortest\\testOut\\out(7)"));
-        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(8)", "fortest\\testOut\\out(8)"));
+        CutLaunch.main("-w -o fortest\\testOut\\out.txt fortest\\in.txt 1-2".split(" "));
+        CutLaunch.main("-w -o fortest\\testOut\\out.txt fortest\\in.txt -3".split(" "));
+        CutLaunch.main("-w -o fortest\\testOut\\out.txt fortest\\in.txt 1-".split(" "));
+        CutLaunch.main("-w -o fortest\\testOut\\out.txt fortest\\in.txt 2-".split(" "));
+        CutLaunch.main("-w -o fortest\\testOut\\out.txt fortest\\in.txt 7-".split(" "));
+        CutLaunch.main("-w -o fortest\\testOut\\out.txt fortest\\in.txt 3-7".split(" "));
+        CutLaunch.main("-c -o fortest\\testOut\\out.txt fortest\\in.txt 4-12".split(" "));
+        CutLaunch.main("-c -o fortest\\testOut\\out.txt fortest\\in.txt -12".split(" "));
+        CutLaunch.main("-c -o fortest\\testOut\\out.txt fortest\\in.txt 4-".split(" "));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest.txt", "fortest\\testOut\\out.txt"));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(1).txt", "fortest\\testOut\\out(1).txt"));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(2).txt", "fortest\\testOut\\out(2).txt"));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(3).txt", "fortest\\testOut\\out(3).txt"));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(4).txt", "fortest\\testOut\\out(4).txt"));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(5).txt", "fortest\\testOut\\out(5).txt"));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(6).txt", "fortest\\testOut\\out(6).txt"));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(7).txt", "fortest\\testOut\\out(7).txt"));
+        Assert.assertTrue(equalsFile("fortest\\testTrue\\outTest(8).txt", "fortest\\testOut\\out(8).txt"));
     }
 
 }

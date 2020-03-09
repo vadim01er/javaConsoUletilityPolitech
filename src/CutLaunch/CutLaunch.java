@@ -47,5 +47,5 @@ public class CutLaunch {
 
         System.out.println("File cropped");
     }
-
+ //java -jar out\artifacts\CroppedFile_jar\CroppedFile.jar -c -o C:\Users\Vadim\IdeaProjects\ght\out.txt  C:\Users\Vadim\IdeaProjects\ght\try.txt 2-6
 }

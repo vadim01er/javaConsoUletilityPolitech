@@ -52,17 +52,20 @@ public class Cut {
         while(change) {
             File dir = new File(outputFileName);
             if(dir.exists()) {
-                if (i > 1 && i < 10) outputFileName = outputFileName.substring(0, outputFileName.length() - 3);
-                else if (i >= 10) outputFileName = outputFileName.substring(0, outputFileName.length() - 4);
-                outputFileName += "("+ i +")";
+                if (i == 1)outputFileName = outputFileName.substring(0, outputFileName.length() - 4);
+                else if (i < 10) outputFileName = outputFileName.substring(0, outputFileName.length() - 7);
+                else outputFileName = outputFileName.substring(0, outputFileName.length() - 8);
+                outputFileName += "("+ i +").txt";
                 i++;
             } else change = false;
         }
+        System.out.println(outputFileName);
     }
 
     public void cutFile() {
         int[] rangeNow = rangeParse(range);
         changeDirectory();
+        new File(outputFileName);
         try (BufferedReader in = new BufferedReader(new FileReader(inputFileName))) {
             try (BufferedWriter out = new BufferedWriter(new FileWriter(outputFileName))){
                 String line;
