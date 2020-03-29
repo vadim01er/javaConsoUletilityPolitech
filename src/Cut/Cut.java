@@ -43,14 +43,13 @@ public class Cut {
             if (line.length() > rangeEnd) out.append(line, 0, rangeEnd);
             else out.append(line);
         } else if (rangeEnd == -1) {
-            if (line.length() > rangeStart) out.append(line, rangeStart, line.length() - rangeStart);
+            if (line.length() > rangeStart) out.append(line, rangeStart, line.length());
         } else {
-            if (line.length() > rangeEnd) out.append(line, rangeStart, rangeEnd - rangeStart);
+            if (line.length() > rangeEnd) out.append(line, rangeStart, rangeEnd);
             else if (line.length() > rangeStart) out.append(line.substring(rangeStart));
         }
         return out.toString();
     }
-
 
     public void cutInAndOutFile(BufferedReader inputFile, BufferedWriter outputFileName) throws IOException {
         String line;

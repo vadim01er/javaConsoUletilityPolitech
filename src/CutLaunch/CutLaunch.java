@@ -26,6 +26,21 @@ public class CutLaunch {
     @Argument(metaVar = "InputName", usage = "Input file name")
     private String inName;
 
+    private static int[] rangeParse(String range) {
+        if (!Pattern.matches("[0-9]+-", range) && !Pattern.matches("-[0-9]+", range) &&
+                !Pattern.matches("[0-9]+-[0-9]+", range))
+            throw new IllegalArgumentException("");
+        Matcher matcher = Pattern.compile("\\d+").matcher(range);
+        int[] out = new int[]{-1, -1};
+        int i = 0;
+        if (Pattern.matches("-[0-9]+", range)) i++;
+        while (matcher.find()) {
+            out[i] = Integer.parseInt(matcher.group());
+            i++;
+        }
+        return out;
+    }
+
     public static void main(String[] args) {
         new CutLaunch().launch(args);
     }
@@ -88,19 +103,6 @@ public class CutLaunch {
         }
     }
 
-    private static int[] rangeParse(String range) {
-        if (!Pattern.matches("[0-9]+-", range) && !Pattern.matches("-[0-9]+", range) &&
-                !Pattern.matches("[0-9]+-[0-9]+", range))
-            throw new IllegalArgumentException("");
-        Matcher matcher = Pattern.compile("\\d+").matcher(range);
-        int[] out = new int[]{-1, -1};
-        int i = 0;
-        if (Pattern.matches("-[0-9]+", range)) i++;
-        while (matcher.find()) {
-            out[i] = Integer.parseInt(matcher.group());
-            i++;
-        }
-        return out;
-    }
+
 
 }
