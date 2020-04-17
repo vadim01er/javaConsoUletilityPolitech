@@ -51,7 +51,7 @@ public class Cut {
         return out.toString();
     }
 
-    public void cutInAndOutFile(BufferedReader inputFile, BufferedWriter outputFileName) throws IOException {
+    public StringBuilder cutInputFile(BufferedReader inputFile) throws IOException {
         String line;
         StringBuilder out = new StringBuilder();
         boolean forN = false;
@@ -63,26 +63,10 @@ public class Cut {
             else
                 out.append(splitW(line, rangeStart, rangeEnd));
         }
-        outputFileName.write(out.toString());
+        return out;
     }
 
-    public void cutInputFile(BufferedReader inputFile) throws IOException {
-        String line;
-        StringBuilder out = new StringBuilder();
-        boolean forN = false;
-        while ((line = inputFile.readLine()) != null) {
-            if (forN) out.append("\n");
-            forN = true;
-            if (isChar)
-                out.append(splitC(line, rangeStart, rangeEnd));
-            else
-                out.append(splitW(line, rangeStart, rangeEnd));
-        }
-        System.out.println(out);
-
-    }
-
-    public void cutOutputFile(Scanner input, BufferedWriter outputFile) throws IOException {
+    public StringBuilder cutCMD(Scanner input) {
         String line;
         StringBuilder out = new StringBuilder();
         boolean forN = false;
@@ -95,21 +79,6 @@ public class Cut {
             else
                 out.append(splitW(line, rangeStart, rangeEnd));
         }
-        outputFile.write(out.toString());
-    }
-
-    public void cutCMD(Scanner input) {
-        String line;
-        StringBuilder out = new StringBuilder();
-        boolean forN = false;
-        while ((line = input.nextLine()) != null) {
-            if (forN) out.append("\n");
-            forN = true;
-            if (isChar)
-                out.append(splitC(line, rangeStart, rangeEnd));
-            else
-                out.append(splitW(line, rangeStart, rangeEnd));
-        }
-        System.out.println(out.toString());
+        return out;
     }
 }

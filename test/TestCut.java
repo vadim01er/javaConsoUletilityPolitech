@@ -15,14 +15,14 @@ public class TestCut {
                     if (!c.equals(m)) return false;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
+            System.err.println("Not found outputFile or outputFile");
         }
         return true;
     }
 
     @Test
     public void cutLauncher() {
-
         CutLaunch.main("-w -o fortest\\testOut\\out.txt fortest\\in.txt 1-2".split(" "));
         CutLaunch.main("-w -o fortest\\testOut\\out(1).txt fortest\\in.txt -3".split(" "));
         CutLaunch.main("-w -o fortest\\testOut\\out(2).txt fortest\\in.txt 1-".split(" "));

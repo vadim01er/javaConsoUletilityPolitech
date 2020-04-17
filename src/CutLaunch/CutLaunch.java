@@ -18,7 +18,7 @@ public class CutLaunch {
     private boolean charInd;
 
     @Option(name = "-w", usage = "World indent", forbids = {"-c"})
-    private boolean worldInd;
+    private boolean wordInd;
 
     @Option(name = "-o", metaVar = "OutputName", usage = "Output file name")
     private String outName;
@@ -45,13 +45,14 @@ public class CutLaunch {
         new CutLaunch().launch(args);
     }
 
+
     private void launch(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
         int[] range;
         try {
             parser.parseArgument(Arrays.copyOf(args, args.length - 1));
             range = rangeParse(args[args.length - 1]);
-            if (charInd == worldInd) {
+            if (charInd == wordInd) {
                 System.err.println("java -jar croppedFile.jar [-c|-w] [-o ofile] [file] range");
                 parser.printUsage(System.err);
                 return;
@@ -69,7 +70,8 @@ public class CutLaunch {
                 new File(outName);
                 try (BufferedReader in = new BufferedReader(new FileReader(inName))) {
                     try (BufferedWriter out = new BufferedWriter(new FileWriter(outName))) {
-                        cut.cutInAndOutFile(in, out);
+                        StringBuilder cutText = cut.cutInputFile(in);
+                        out.write(cutText.toString());
                     }
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
@@ -80,7 +82,8 @@ public class CutLaunch {
             case 4: {
                 new File(outName);
                 try (BufferedWriter out = new BufferedWriter(new FileWriter(outName))) {
-                    cut.cutOutputFile(new Scanner(System.in), out);
+                    StringBuilder cutText = cut.cutCMD(new Scanner(System.in));
+                    out.write(cutText.toString());
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
                     System.err.println("error with outputFile");
@@ -89,7 +92,8 @@ public class CutLaunch {
             }
             case 3: {
                 try (BufferedReader in = new BufferedReader(new FileReader(inName))) {
-                    cut.cutInputFile(in);
+                    StringBuilder cutText = cut.cutInputFile(in);
+                    System.out.println(cutText.toString());
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
                     System.err.println("error with inputFile");
@@ -97,12 +101,10 @@ public class CutLaunch {
                 break;
             }
             case 2: {
-                cut.cutCMD(new Scanner(System.in));
+                StringBuilder cutText = cut.cutCMD(new Scanner(System.in));
+                System.out.println(cutText.toString());
                 break;
             }
         }
     }
-
-
-
 }
