@@ -1,7 +1,8 @@
 package Cut;
 
-import java.io.*;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Cut {
     private final int rangeStart;
@@ -15,7 +16,7 @@ public class Cut {
     }
 
     private static String splitW(String line, int rangeStart, int rangeEnd) {
-        String[] word = line.split(" ");
+        String[] word = line.split("\\s+");
         String[] space = line.split("\\S+");
         int[] rangeNow = new int[]{1, 0};
         StringBuilder out = new StringBuilder();
@@ -51,34 +52,15 @@ public class Cut {
         return out.toString();
     }
 
-    public StringBuilder cutInputFile(BufferedReader inputFile) throws IOException {
+    public void cutInputFile(BufferedReader inputFile, BufferedWriter out) throws IOException {
         String line;
-        StringBuilder out = new StringBuilder();
-        boolean forN = false;
         while ((line = inputFile.readLine()) != null) {
-            if (forN) out.append("\n");
-            forN = true;
             if (isChar)
-                out.append(splitC(line, rangeStart, rangeEnd));
+                out.write(splitC(line, rangeStart, rangeEnd));
             else
-                out.append(splitW(line, rangeStart, rangeEnd));
+                out.write(splitW(line, rangeStart, rangeEnd));
+            out.write("\n");
         }
-        return out;
     }
 
-    public StringBuilder cutCMD(Scanner input) {
-        String line;
-        StringBuilder out = new StringBuilder();
-        boolean forN = false;
-        while (input.hasNextLine()) {
-            line = input.nextLine();
-            if (forN) out.append("\n");
-            forN = true;
-            if (isChar)
-                out.append(splitC(line, rangeStart, rangeEnd));
-            else
-                out.append(splitW(line, rangeStart, rangeEnd));
-        }
-        return out;
-    }
 }

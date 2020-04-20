@@ -1,8 +1,8 @@
 package CutLaunch;
 
+
 import java.io.*;
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,15 +28,12 @@ public class CutLaunch {
 
     private static int[] rangeParse(String range) {
         if (!Pattern.matches("[0-9]+-", range) && !Pattern.matches("-[0-9]+", range) &&
-                !Pattern.matches("[0-9]+-[0-9]+", range))
-            throw new IllegalArgumentException("");
-        Matcher matcher = Pattern.compile("\\d+").matcher(range);
+                !Pattern.matches("[0-9]+-[0-9]+", range)) throw new IllegalArgumentException("");
+        Matcher matcher = Pattern.compile("([0-9]+)?-([0-9]+)?").matcher(range);
         int[] out = new int[]{-1, -1};
-        int i = 0;
-        if (Pattern.matches("-[0-9]+", range)) i++;
-        while (matcher.find()) {
-            out[i] = Integer.parseInt(matcher.group());
-            i++;
+        if (matcher.find()) {
+            out[0] = matcher.group(1) != null ? Integer.parseInt(matcher.group(1)) : -1;
+            out[1] = matcher.group(2) != null ? Integer.parseInt(matcher.group(2)) : -1;
         }
         return out;
     }
@@ -65,45 +62,43 @@ public class CutLaunch {
 
         Cut cut = new Cut(range[0], range[1], charInd);
 
-        switch (args.length) {
-            case 5: {
-                new File(outName);
-                try (BufferedReader in = new BufferedReader(new FileReader(inName))) {
-                    try (BufferedWriter out = new BufferedWriter(new FileWriter(outName))) {
-                        StringBuilder cutText = cut.cutInputFile(in);
-                        out.write(cutText.toString());
-                    }
-                } catch (IOException e) {
-                    System.err.println(e.getMessage());
-                    System.err.println("error with outputFile or inputFile");
-                }
-                break;
-            }
-            case 4: {
-                new File(outName);
+        if (outName != null && inName != null) {
+            new File(outName);
+            try (BufferedReader in = new BufferedReader(new FileReader(inName))) {
                 try (BufferedWriter out = new BufferedWriter(new FileWriter(outName))) {
-                    StringBuilder cutText = cut.cutCMD(new Scanner(System.in));
-                    out.write(cutText.toString());
-                } catch (IOException e) {
-                    System.err.println(e.getMessage());
-                    System.err.println("error with outputFile");
+                    cut.cutInputFile(in, out);
                 }
-                break;
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+                System.err.println("error with outputFile or inputFile");
             }
-            case 3: {
-                try (BufferedReader in = new BufferedReader(new FileReader(inName))) {
-                    StringBuilder cutText = cut.cutInputFile(in);
-                    System.out.println(cutText.toString());
-                } catch (IOException e) {
-                    System.err.println(e.getMessage());
-                    System.err.println("error with inputFile");
+        } else if (outName != null) {
+            new File(outName);
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
+               try (BufferedWriter out = new BufferedWriter(new FileWriter(outName))){
+                   cut.cutInputFile(in, out);
+               }
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+                System.err.println("error with outputFile");
+            }
+        } else if (inName != null) {
+            try (BufferedReader in = new BufferedReader(new FileReader(inName))) {
+                try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out))){
+                    cut.cutInputFile(in, out);
                 }
-                break;
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+                System.err.println("error with inputFile");
             }
-            case 2: {
-                StringBuilder cutText = cut.cutCMD(new Scanner(System.in));
-                System.out.println(cutText.toString());
-                break;
+        } else {
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))){
+                try (BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));) {
+                    cut.cutInputFile(in, out);
+                }
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+                System.err.println("error CMD, you don't enter a words");
             }
         }
     }
